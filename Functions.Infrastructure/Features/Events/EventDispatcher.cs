@@ -1,5 +1,4 @@
 ﻿using System.Reactive.Linq;
-using System.Reactive.Threading.Tasks;
 using Functions.Infrastructure.Features.EventHandlers;
 
 namespace Functions.Infrastructure.Features.Events;
