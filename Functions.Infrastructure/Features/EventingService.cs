@@ -74,7 +74,9 @@ internal class EventingService : IEventingService
         request.Headers.Add("Ce-Source", Settings.Source);
         request.Headers.Add("Ce-specversion", "1.0");
         request.Headers.Add("Ce-Type",   @event.GetType().Name);
+        _logger.LogTrace("Event id {EventId}, Event source {EventSource}, Specversion {SpecVersion}, Event type {EventType}, Event subject {EventSubject}", @event.CorrelationId, Settings.Source, "1.0", @event.GetType().Name, target);
         var serialized = JsonConvert.SerializeObject(@event, _jsonSettings);
+        _logger.LogTrace("Event data: {EventData}", serialized);
         
         request.Content = new StringContent(serialized, Encoding.UTF8, "application/json");
         
@@ -83,9 +85,10 @@ internal class EventingService : IEventingService
         if (result.StatusCode != HttpStatusCode.Accepted)
         {
             _logger.LogError("Failed to publish event {EventType} ({EventId}) to {Target}", @event.GetType().Name, @event.CorrelationId, target);
-            _logger.LogError("Status code: {StatusCode}", result.StatusCode);
-            _logger.LogError("Reason: {Reason}", result.ReasonPhrase);
-            _logger.LogError("Content: {Content}", await result.Content.ReadAsStringAsync());
         }
+        _logger.LogInformation("Publishing {EventId} status code {StatusCode}", @event.CorrelationId, result.StatusCode);
+        _logger.LogTrace("Status code: {StatusCode}", result.StatusCode);
+        _logger.LogTrace("Reason: {Reason}",          result.ReasonPhrase);
+        _logger.LogTrace("Content: {Content}", await result.Content.ReadAsStringAsync());
     }
 }
