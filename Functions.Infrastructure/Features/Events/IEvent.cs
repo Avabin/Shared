@@ -3,6 +3,7 @@
 public interface IEvent
 {
     Guid CorrelationId { get; set; }
+    string ApiKey { get; set; }
 }
 
 public interface IQuery : IEvent
@@ -17,7 +18,8 @@ public interface ICommand : IEvent
 
 public abstract class EventBase : IEvent
 {
-    public Guid CorrelationId { get; set; } = Guid.NewGuid();
+    public Guid   CorrelationId { get; set; } = Guid.NewGuid();
+    public string ApiKey        { get; set; } = "";
 }
 
 public abstract class QueryBase : EventBase, IQuery

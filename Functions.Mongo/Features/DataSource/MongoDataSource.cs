@@ -12,11 +12,11 @@ public class MongoDataSource<TDocument> : IMongoDataSource<TDocument> where TDoc
     protected        MongoSettings                       Settings => _options.Value;
 
     private readonly Lazy<MongoClient>                 _client;
-    public           MongoClient                       Client => _client.Value;
+    protected        MongoClient                       Client => _client.Value;
     private readonly Lazy<IMongoDatabase>              _database;
-    public           IMongoDatabase                    Database => _database.Value;
+    protected        IMongoDatabase                    Database => _database.Value;
     private readonly Lazy<IMongoCollection<TDocument>> _collection;
-    public           IMongoCollection<TDocument>       Collection => _collection.Value;
+    protected        IMongoCollection<TDocument>       Collection => _collection.Value;
 
     public MongoDataSource(IOptions<MongoSettings> options, ILogger<MongoDataSource<TDocument>> logger)
     {
@@ -28,20 +28,20 @@ public class MongoDataSource<TDocument> : IMongoDataSource<TDocument> where TDoc
         _collection = new Lazy<IMongoCollection<TDocument>>(() => Database.GetCollection<TDocument>(typeof(TDocument).Name));
     }
 
-    public async Task<TDocument> CreateAsync(TDocument document)
+    public async Task<TDocument> InsertAsync(TDocument document)
     {
         _logger.LogInformation("Creating document {DocumentId}", document.Id);
         await Collection.InsertOneAsync(document);
         return document;
     }
 
-    public async Task<TDocument?> ReadAsync(string id)
+    public async Task<TDocument?> FindOneByIdAsync(string id)
     {
         _logger.LogInformation("Reading document {DocumentId}", id);
         return await Collection.Find(x => x.Id == id).FirstOrDefaultAsync();
     }
 
-    public async Task<IEnumerable<TDocument>> ReadAllAsync(int? skip, int? take)
+    public async Task<IEnumerable<TDocument>> FindAllAsync(int? skip, int? take)
     {
         _logger.LogInformation("Reading all documents");
         return await Collection.Find(x => true).Skip(skip).Limit(take).ToListAsync();

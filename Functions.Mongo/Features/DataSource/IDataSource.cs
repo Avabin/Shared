@@ -4,12 +4,12 @@ public interface IDataSource<TDocument, TId> where TDocument : IDocument<TId>
 {
     // async CRUD operations
     // create
-    Task<TDocument> CreateAsync(TDocument document);
+    Task<TDocument> InsertAsync(TDocument document);
 
     // read
-    Task<TDocument?> ReadAsync(TId id);
+    Task<TDocument?> FindOneByIdAsync(TId id);
 
-    Task<IEnumerable<TDocument>> ReadAllAsync(int? skip, int? take);
+    Task<IEnumerable<TDocument>> FindAllAsync(int? skip, int? take);
 
     // update
     Task<TDocument> UpdateAsync(TDocument document);

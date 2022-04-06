@@ -2,9 +2,9 @@
 
 public interface IDataService<in TCreateDto, in TUpdateDto, TGetDataDto, TDocument>
 {
-    Task<TGetDataDto>              Create(TCreateDto createDataDto);
-    Task<TGetDataDto>              Read(string    id);
-    Task<IEnumerable<TGetDataDto>> ReadAll(int? skip = null, int? take = null);
-    Task<TGetDataDto>              Update(string id, TUpdateDto createDataDto);
-    Task                    Delete(string id);
+    Task<TGetDataDto> InsertAsync(TCreateDto createDataDto);
+    Task<TGetDataDto> FindByIdAsync(string   id);
+    Task<IEnumerable<TGetDataDto>> FindAllAsync(int? skip = null, int? take = null);
+    Task<TGetDataDto>              UpdateAsync(string id, TUpdateDto createDataDto);
+    Task                    DeleteAsync(string id);
 }

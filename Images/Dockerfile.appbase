@@ -1,0 +1,4 @@
+FROM mcr.microsoft.com/dotnet/aspnet:6.0
+RUN apt-get update && apt-get -y install procps curl \
+    && curl -Lo /root/debug https://download.jetbrains.com/rider/ssh-remote-debugging/linux-x64/jetbrains_debugger_agent_20210604.19.0 \
+    && chmod +x /root/debug
