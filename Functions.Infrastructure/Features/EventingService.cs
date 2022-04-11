@@ -74,6 +74,7 @@ internal class EventingService : IEventingService
         request.Headers.Add("Ce-Source", Settings.Source);
         request.Headers.Add("Ce-specversion", "1.0");
         request.Headers.Add("Ce-Type",   @event.GetType().Name);
+        request.Headers.Add("Ce-Time",   DateTime.UtcNow.ToString("o"));
         _logger.LogTrace("Event id {EventId}, Event source {EventSource}, Specversion {SpecVersion}, Event type {EventType}, Event subject {EventSubject}", @event.CorrelationId, Settings.Source, "1.0", @event.GetType().Name, target);
         @event.ApiKey = Settings.ApiKey;
         var serialized = JsonConvert.SerializeObject(@event, _jsonSettings);

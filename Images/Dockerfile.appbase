@@ -1,4 +1,7 @@
 FROM mcr.microsoft.com/dotnet/aspnet:6.0
-RUN apt-get update && apt-get -y install procps curl \
-    && curl -Lo /root/debug https://download.jetbrains.com/rider/ssh-remote-debugging/linux-x64/jetbrains_debugger_agent_20210604.19.0 \
-    && chmod +x /root/debug
+RUN apt-get update && apt-get -y install procps openssh-server sudo
+# disable sudo ask for password
+RUN echo "ubuntu ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+RUN useradd -rm -d /home/ubuntu -s /bin/bash -g root -G sudo -u 1001 -p debugpass ubuntu
+USER ubuntu
+WORKDIR /home/ubuntu

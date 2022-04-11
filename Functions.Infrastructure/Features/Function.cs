@@ -6,7 +6,7 @@ namespace Functions.Infrastructure.Features;
 
 public static class Function
 {
-    public static WebApplicationBuilder CreateBuilder(string[] args, string envPrefix, string serviceName)
+    public static WebApplicationBuilder CreateBuilder(string[] args, string envPrefix, string serviceName, bool configureEvents = true)
     {
         var seqUrl       = Environment.GetEnvironmentVariable($"SEQ_URL")      ?? "http://localhost:5341";
         var hostname     = Environment.GetEnvironmentVariable("HOSTNAME")      ?? "localhost";
@@ -25,7 +25,7 @@ public static class Function
                                                          .Enrich.WithProperty("Hostname", hostname)
                                                          .Enrich.WithProperty("Service", serviceName));
         builder.Configuration.AddEnvironmentVariables(envPrefix);
-        builder.Services.AddEventing(builder.Configuration.GetRequiredSection("Eventing"));
+        if(configureEvents) builder.Services.AddEventing(builder.Configuration.GetRequiredSection("Eventing"));
 
         return builder;
     }
