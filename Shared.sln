@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Functions.Infrastructure", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Functions.Mongo", "Functions.Mongo\Functions.Mongo.csproj", "{CBD5235D-0A31-4E80-8997-C594CD227CA5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DummyBroker", "DummyBroker\DummyBroker.csproj", "{3B082890-9D47-4053-927C-AD197F5B686D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{CBD5235D-0A31-4E80-8997-C594CD227CA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CBD5235D-0A31-4E80-8997-C594CD227CA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CBD5235D-0A31-4E80-8997-C594CD227CA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B082890-9D47-4053-927C-AD197F5B686D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B082890-9D47-4053-927C-AD197F5B686D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B082890-9D47-4053-927C-AD197F5B686D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B082890-9D47-4053-927C-AD197F5B686D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

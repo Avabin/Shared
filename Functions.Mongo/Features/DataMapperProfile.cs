@@ -14,3 +14,13 @@ public class DataMapperProfile<TCreate, TGet, TUpdate, TDoc> : Profile
         CreateMap<TCreate, TUpdate>().ReverseMap();
     }
 }
+
+public class DataMapperProfile<TCreate, TGet, TDoc> : Profile
+{
+    public DataMapperProfile()
+    {
+        CreateMap<TDoc, TCreate>().ReverseMap();
+        CreateMap<TDoc, TGet>().ReverseMap();
+        CreateMap<TCreate, TGet>().ReverseMap();
+    }
+}

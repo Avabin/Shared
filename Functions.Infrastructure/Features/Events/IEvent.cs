@@ -6,28 +6,7 @@ public interface IEvent
     string ApiKey { get; set; }
 }
 
-public interface IQuery : IEvent
+public interface IRequest : IEvent
 {
-    
-}
-
-public interface ICommand : IEvent
-{
-    
-}
-
-public abstract class EventBase : IEvent
-{
-    public Guid   CorrelationId { get; set; } = Guid.NewGuid();
-    public string ApiKey        { get; set; } = "";
-}
-
-public abstract class QueryBase : EventBase, IQuery
-{
-    
-}
-
-public abstract class CommandBase : EventBase, ICommand
-{
-    
+    public string Source { get; set; }
 }

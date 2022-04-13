@@ -12,4 +12,11 @@ internal class EventHandlerFactory : IEventHandlerFactory
     }
     public IEventHandler<T> Create<T>() where T : IEvent => 
         _provider.GetRequiredService<IEventHandler<T>>();
+
+    public IEventHandler? Create(Type eventType)
+    {
+        var handlerType = typeof(IEventHandler<>).MakeGenericType(eventType);
+
+        return (IEventHandler?) _provider.GetService(handlerType);
+    }
 }

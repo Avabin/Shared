@@ -1,4 +1,7 @@
-﻿using Functions.Infrastructure.Features.Extensions;
+﻿using Functions.Infrastructure.Features.EventHandlers;
+using Functions.Infrastructure.Features.Events;
+using Functions.Infrastructure.Features.Extensions;
+using Functions.Infrastructure.Features.QueryHandlers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Serilog;
 
@@ -25,7 +28,19 @@ public static class Function
                                                          .Enrich.WithProperty("Hostname", hostname)
                                                          .Enrich.WithProperty("Service", serviceName));
         builder.Configuration.AddEnvironmentVariables(envPrefix);
-        if(configureEvents) builder.Services.AddEventing(builder.Configuration.GetRequiredSection("Eventing"));
+        if(configureEvents) { builder.Services.AddEventing(builder.Configuration.GetRequiredSection("Eventing"));}
+
+        return builder;
+    }
+    
+    public static WebApplicationBuilder CreateRestApiBuilder(string[] args, string envPrefix, string serviceName, bool configureEvents = true)
+    {
+        var builder = CreateBuilder(args, envPrefix, serviceName, configureEvents);
+
+        builder.Services.AddSingleton<IQueryHandlerFactory, QueryHandlerFactory>().AddSingleton<IRespondingEventHandlerFactory, RespondingEventHandlerFactory>();
+        
+        builder.AddDefaultAuthentication();
+        builder.Services.AddControllers();
 
         return builder;
     }

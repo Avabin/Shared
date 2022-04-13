@@ -5,4 +5,6 @@ namespace Functions.Infrastructure.Features.EventHandlers;
 public interface IEventHandlerFactory
 {
     IEventHandler<T> Create<T>() where T : IEvent;
+
+    IEventHandler? Create(Type eventType);
 }
